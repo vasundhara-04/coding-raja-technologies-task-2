@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Music Player</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        #music-container {
+            width: 300px;
+            text-align: center;
+        }
+
+        #audio-player {
+            width: 100%;
+            margin-bottom: 10px;
+        }
+
+        #song-title {
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+
+        #play-btn, #pause-btn, #prev-btn, #next-btn {
+            cursor: pointer;
+            font-size: 20px;
+            margin: 0 5px;
+        }
+    </style>
+</head>
+<body>
+
+<div id="music-container">
+    <audio id="audio-player" controls>
+        <source src="your-song.mp3" type="audio/mp3">
+        Your browser does not support the audio element.
+    </audio>
+    <div id="song-title">Song Title</div>
+    <button id="prev-btn" onclick="prevSong()">&#9665;</button>
+    <button id="play-btn" onclick="togglePlay()">▶</button>
+    <button id="pause-btn" onclick="togglePause()">❚❚</button>
+    <button id="next-btn" onclick="nextSong()">&#9655;</button>
+</div>
+
+<script>
+    const audioPlayer = document.getElementById('audio-player');
+    const songTitle = document.getElementById('song-title');
+    const playBtn = document.getElementById('play-btn');
+    const pauseBtn = document.getElementById('pause-btn');
+    const prevBtn = document.getElementById('prev-btn');
+    const nextBtn = document.getElementById('next-btn');
+
+    const songs = ['song1.mp3', 'song2.mp3', 'song3.mp3'];
+    let currentSongIndex = 0;
+
+    function loadSong() {
+        audioPlayer.src = songs[currentSongIndex];
+        songTitle.textContent = songs[currentSongIndex].replace('.mp3', '');
+    }
+
+    function togglePlay() {
+        audioPlayer.play();
+        playBtn.style.display = 'none';
+        pauseBtn.style.display = 'inline-block';
+    }
+
+    function togglePause() {
+        audioPlayer.pause();
+        playBtn.style.display = 'inline-block';
+        pauseBtn.style.display = 'none';
+    }
+
+    function prevSong() {
+        currentSongIndex = (currentSongIndex - 1 + songs.length) % songs.length;
+        loadSong();
+        togglePlay();
+    }
+
+    function nextSong() {
+        currentSongIndex = (currentSongIndex + 1) % songs.length;
+        loadSong();
+        togglePlay();
+    }
+
+    loadSong(); // Load the first song
+</script>
+
+</body>
+</html>
